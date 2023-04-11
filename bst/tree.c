@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree.h"
+#include "stack.h"
+#include "queue.h"
 
 struct node {
     int key;
@@ -53,6 +55,96 @@ int tree_height(Node * node){
     return 1+tree_height(node->right);
 }
 
+void rec_preorder(Node * node, void(*visit)(Node*)){
+    if(!node)
+        return;
+    visit(node);
+    rec_preorder(node->left, visit);
+    rec_preorder(node->right, visit);
+}
+
+void rec_inorder(Node * node, void(*visit)(Node*)){
+    if(!node)
+        return;
+    rec_inorder(node->left, visit);
+    visit(node);
+    rec_inorder(node->right, visit);
+}
+
+void rec_posorder(Node * node, void(*visit)(Node*)){
+    if(!node)
+        return;
+    rec_posorder(node->left, visit);
+    rec_posorder(node->right, visit);
+    visit(node);
+}
+
+void iter_preorder(Node * node, int size, void(*visit)(Node*)){
+    if(!node)
+        return;
+    Stack * stack = init_stack(size);
+    stack_push(stack, node);
+    
+    while(!is_empty_stack(stack)){
+        node = stack_pop(stack);
+        visit(node);
+        if(node->right)
+            stack_push(stack, node->right);
+        if(node->left)
+            stack_push(stack, node->left);
+    }
+    end_stack(stack);
+}
+
+void iter_inorder(Node * node, int size, void(*visit)(Node*)){
+    Stack * stack = init_stack(size);
+    while(!is_empty_stack(stack) || node){
+        if(node){
+            stack_push(stack, node);
+            node = node->left;
+            continue;
+        }   
+        node = stack_pop(stack);
+        visit(node);
+        node = node->right;
+    }
+    end_stack(stack);
+}
+
+void iter_posorder(Node * node, int size, void(*visit)(Node*)){
+    Stack * stack = init_stack(size);
+    Node * lastNode, *peekNode;
+
+    while(!is_empty_stack(stack) || node){
+        if(node){
+            stack_push(stack, node);
+            node = node->left;
+            continue;
+        }
+        peekNode = stack_peek(stack);
+        if(peekNode->right && (lastNode != peekNode->right)){
+            node = peekNode->right;
+            continue;
+        }
+        visit(peekNode);
+        lastNode = stack_pop(stack);
+    }
+    end_stack(stack);
+}
+
+void level_order_traversal(Node * node, int size, void(*visit)(Node*)){
+    if(!node)
+        return;
+    Queue * queue = init_queue(size);
+    enqueue(queue, node);
+    while(node){
+        node = dequeue(queue);
+        visit(node);
+        enqueue(queue, node->left);
+        enqueue(queue, node->right);
+    }
+}
+
 //==================================================//
 Node * init_node(){
     return NULL;
@@ -64,4 +156,8 @@ Node * fill_node(Node * left, Node * right, int key){
     node->right = right;
     node->key = key;
     return node;
+}
+
+void print_node(Node * node){
+    printf("%d\n", node->key);
 }
