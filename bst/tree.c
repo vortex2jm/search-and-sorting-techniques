@@ -137,12 +137,15 @@ void level_order_traversal(Node * node, int size, void(*visit)(Node*)){
         return;
     Queue * queue = init_queue(size);
     enqueue(queue, node);
-    while(node){
+    while(!is_empty_queue(queue)){
         node = dequeue(queue);
         visit(node);
-        enqueue(queue, node->left);
-        enqueue(queue, node->right);
+        if(node->left)
+            enqueue(queue, node->left);
+        if(node->right)
+            enqueue(queue, node->right);
     }
+    end_queue(queue);
 }
 
 //==================================================//
@@ -159,5 +162,6 @@ Node * fill_node(Node * left, Node * right, int key){
 }
 
 void print_node(Node * node){
-    printf("%d\n", node->key);
+    if(node)
+        printf("%d\n", node->key);
 }

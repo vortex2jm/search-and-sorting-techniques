@@ -18,7 +18,7 @@ void end_queue(Queue *queue);
 //========================================//
 Queue * init_queue(int size){
     Queue * q = malloc(sizeof(Queue));
-    q->elements = malloc(sizeof(Node*));
+    q->elements = malloc(sizeof(Node*)*size * 2);
     q->size = size;
     q->amount = 0;
     q->front = 0;    

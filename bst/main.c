@@ -13,9 +13,13 @@ int main(int argc, char const *argv[])
 
     // Filling tree with random values
     srand(time(NULL));
+    int random=0;
     for(int x=0; x<key_amount; x++){
-        tree = tree_push(tree, rand() % 100000);
-    } 
+        random = rand() % 100;
+        tree = tree_push(tree, random);
+        printf("%d ", random);
+    }
+    printf("\n"); 
 
     clock_t rpre_start, rpre_end, ipre_start, ipre_end;
     clock_t rin_start, rin_end, iin_start, iin_end;
@@ -54,15 +58,15 @@ int main(int argc, char const *argv[])
     iter_posorder(tree, key_amount, print_node);
     ipos_end = clock();
 
-    // printf("Level-order iterative:\n");
-    // lv_order_start = clock();
-    // level_order_traversal(tree, key_amount, print_node);
-    // lv_order_end = clock();
+    printf("Level-order iterative:\n");
+    lv_order_start = clock();
+    level_order_traversal(tree, key_amount, print_node);
+    lv_order_end = clock();
 
     // Calculating times
     double rpre_time, rin_time, rpos_time;
     double ipre_time, iin_time, ipos_time;
-    // double lv_order_time;
+    double lv_order_time;
 
     rpre_time = ((double)rpre_end - rpre_start)/CLOCKS_PER_SEC;
     rin_time = ((double)rin_end - rin_start)/CLOCKS_PER_SEC;
@@ -72,7 +76,7 @@ int main(int argc, char const *argv[])
     iin_time = ((double)iin_end - iin_start)/CLOCKS_PER_SEC;
     ipos_time = ((double)ipos_end - ipos_start)/CLOCKS_PER_SEC;
     
-    // lv_order_time = ((double)lv_order_end - lv_order_start)/CLOCKS_PER_SEC;
+    lv_order_time = ((double)lv_order_end - lv_order_start)/CLOCKS_PER_SEC;
 
     printf("recursive pre-order time: %lf seconds\n", rpre_time);
     printf("recursive in-order time: %lf seconds\n", rin_time);
@@ -80,10 +84,10 @@ int main(int argc, char const *argv[])
     printf("iterative pre-order time: %lf seconds\n", ipre_time);
     printf("iterative in-order time: %lf seconds\n", iin_time);
     printf("iterative pos-order time: %lf seconds\n", ipos_time);
-    // printf("iterative lv_order time: %lf seconds\n", lv_order_time);
+    printf("iterative lv_order time: %lf seconds\n", lv_order_time);
 
     // Printing height
-    // printf("height = %d\n", tree_height(tree));
+    printf("height = %d\n", tree_height(tree));
     
     // Deallocating memory 
     end_tree(tree);
