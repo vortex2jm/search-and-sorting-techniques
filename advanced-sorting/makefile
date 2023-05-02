@@ -10,6 +10,11 @@ merge-sort: general
 	@ $(LINK)
 	@ $(MOVE)
 
+quick-sort: general
+	@ $(COMPILE) quick-sort.c
+	@ $(LINK)
+	@ $(MOVE)
+
 general: clean
 	@ gcc -c client.c && mkdir obj
 
