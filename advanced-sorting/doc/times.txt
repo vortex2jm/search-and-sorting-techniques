@@ -1,0 +1,57 @@
+#These examples uses an array of 100.000 indexes
+
+OBS: It has lots of duplicated elements
+
+//===============
+merge sort top-down
+1- 0.035s
+2- 0.024s
+3- 0.040s
+4- 0.044s
+5- 0.026s
+avarage - 0.0338
+
+//==================
+Merge sort top-down + cutoff
+1- 0.037
+2- 0.038
+3- 0.032
+4- 0.028
+5- 0.031
+avarage - 0.0332
+
+//=====================
+Merge sort top-down + merge skip
+1- 0.035
+2- 0.026
+3- 0.029
+4- 0.032
+5- 0.037
+avarage - 0.0318
+
+//==============================
+Merge sort top-down + cutoff + merge skip
+1- 0.0089
+2- 0.0040
+3- 0.0109
+4- 0.0104
+5- 0.0092
+avarage - 0.0087s
+
+//==================
+Merge sort bottom-up
+1- 0.036
+2- 0.032
+3- 0.020
+4- 0.033
+5- 0.036
+avarage- 0.0314
+
+//===========================
+Merge sort bottom-up + cutoff
+1- 
+2- 
+3- 
+4- 
+5- 
+avarage- 
